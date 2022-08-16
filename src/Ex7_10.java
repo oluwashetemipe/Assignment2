@@ -4,12 +4,14 @@ public class Ex7_10 {
     public static void main(String[] args) {
         //input checks
         int[] range = new int[11];
+        int i = 0;
 
             Scanner input = new Scanner(System.in);
-            try{
-                for (int i = 0; i < 10; i ++){
-                    System.out.println("Please enter gross sales for the week: ");
-                    int grossSale = input.nextInt();
+        try {
+            while (i < 10) {
+                System.out.println("Please enter gross sales for the week: ");
+                int grossSale = input.nextInt();
+                if (grossSale > 0) {
                     int salary = calculateSalary(grossSale);
                     if (salary >= 200 && salary < 300) {
                         range[2] += 1;
@@ -30,12 +32,24 @@ public class Ex7_10 {
                     } else if (salary >= 1000) {
                         range[10] += 1;
                     }
-                }
+                    i++;
+                } else
+                    System.out.println("Input not in range");
             }
-            catch (Exception e){
-                System.out.println("Salary not in range");
-            }
+        }
+        catch (Exception e){
+            System.out.println("Input Mismatch");
+        }
 
+                printTable(range);
+
+    }
+    public static int calculateSalary(int grossSale) {
+        int salary = 0;
+        salary = (int) (200 + (0.09 * grossSale));
+        return salary;
+    }
+    public static void printTable(int[] range){
         System.out.printf("%s%8s%n", "Range", "Value");
         for (int i = 2; i < range.length; i++){
             if (i == 10){
@@ -48,10 +62,5 @@ public class Ex7_10 {
             System.out.println();
         }
     }
-    public static int calculateSalary(int grossSale){
-            int salary = 0;
-            salary = (int) (200 + (0.09 * grossSale));
-            return salary;
-        }
     }
 
