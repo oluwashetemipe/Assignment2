@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Ex7_21 {
@@ -19,139 +20,147 @@ public class Ex7_21 {
 //        int[][] newPosition = {{0,0}};
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter a command: 1 - Pen up, 2 - Pen down");
-        while (input.hasNext()){
+        while (input.hasNext()) {
             commands = input.nextInt();
-            if (commands == PEN_UP){
+            if (commands == PEN_UP) {
                 System.out.println("Pen up, your turtle would move freely without traces:");
 
-            }
-            else if (commands == PEN_DOWN){
+            } else if (commands == PEN_DOWN) {
                 System.out.println("Pen down, your turtle would move with traces emerging in shapes,please input 3 to go right or 4 to go left::");
-                commands = input.nextInt();
-                    while (commands != END){
-                        try{
+                try {
+                    commands = input.nextInt();
+                    while (commands != END) {
                             if (commands == RIGHT) {
                                 System.out.println("Please enter how many spaces right you'd like to move:");
-                                int spaces = input.nextInt();
                                 try {
-                                     if (rowPosition > 0 && columnPosition > 0){
-                                        if (columnPosition - spaces  >= 0){
+                                    int spaces = input.nextInt();
+                                    if (rowPosition > 0 && columnPosition > 0) {
+                                        if (columnPosition - spaces >= 0) {
                                             for (int i = columnPosition; i > columnPosition - spaces; i--) {
                                                 floor[rowPosition][i] = 1;
                                                 columnPosition -= 1;
                                             }
-                                            System.out.printf("%d%d",rowPosition,columnPosition);
-                                            System.out.println("print the board");
-                                        }
-                                        else if (columnPosition - spaces < 0){
-                                            System.out.println("You have entered an impossible amount of spaces");
-                                            System.out.printf("%d%d",rowPosition,columnPosition);
-                                            System.out.println("print the board");
-                                            continue;
-                                        }
-                                    }
-                                    else if (rowPosition == 0  && columnPosition == 0){
-                                        for (int i = 0; i < spaces; i++) {
-                                            floor[rowPosition][i] = 1;
-                                            columnPosition += 1;
-                                        }
-                                        System.out.printf("%d%d",rowPosition,columnPosition);
-                                        System.out.println("print the board");
-                                    }
-                                    else if (rowPosition == 0 && columnPosition > 0){
-                                        for (int i = 0; i < spaces; i++) {
-                                            floor[i][columnPosition] = 1;
-                                            rowPosition += 1;
-                                        }
-                                        System.out.printf("%d%d",rowPosition,columnPosition);
-                                        System.out.println("print the board");
-                                    }
-                                    else if (rowPosition > 0 && columnPosition == 0){
-                                        if (rowPosition - spaces >= 0){
-                                            for (int i = rowPosition; i > rowPosition - spaces; i--) {
-                                                floor[i][columnPosition] = 1;
-                                                rowPosition -= 1;
-                                            }
+                                            currentPosition[0][1] = columnPosition;
                                             System.out.printf("%d%d", rowPosition, columnPosition);
-                                            System.out.println("print the board");
+//                                            System.out.println("print the board");
+                                        }
+                                        else if (columnPosition - spaces < 0) {
+                                            System.out.println("You have entered an impossible amount of spaces");
+                                            System.out.printf("%d%d", rowPosition, columnPosition);
+//                                            System.out.println("print the board");
                                         }
                                     }
-
-                                }
-
-                                catch (Exception e){
-                                    System.out.println("Invalid input,you can only go right less than 20 spaces");
-                            }
-                                System.out.println("Please input 3 to go right or 4 to go left:");
-                                commands = input.nextInt();
-
-                            }
-                            else if (commands == LEFT) {
-                                System.out.println("Please enter how many space left you'd like to move:");
-                                int spaces = input.nextInt();
-                                try {
-                                    if (rowPosition == 0  && columnPosition == 0){
-                                        for (int i = 0; i < spaces; i++) {
-                                            floor[i][columnPosition] = 1;
-                                            rowPosition += 1;
-                                        }
-                                        System.out.printf("%d%d",rowPosition,columnPosition);
-                                        System.out.println("print the board");
-                                    }
-                                    else if (rowPosition > 0 && columnPosition == 0){
+                                    else if (rowPosition == 0 && columnPosition == 0) {
                                         for (int i = 0; i < spaces; i++) {
                                             floor[rowPosition][i] = 1;
                                             columnPosition += 1;
                                         }
-                                        System.out.printf("%d%d",rowPosition,columnPosition);
-                                        System.out.println("print the board");
-                                    }
-                                    else if (rowPosition > 0 && columnPosition > 0){
-                                        if (rowPosition - spaces >= 0){
+                                        currentPosition[0][1] = columnPosition;
+                                        System.out.printf("%d%d", rowPosition, columnPosition);
+//                                        System.out.println("print the board");
+                                    } else if (rowPosition == 0 && columnPosition > 0) {
+                                        for (int i = 0; i < spaces; i++) {
+                                            floor[i][columnPosition] = 1;
+                                            rowPosition += 1;
+                                        }
+                                        currentPosition[0][0] = rowPosition;
+                                        System.out.printf("%d%d", rowPosition, columnPosition);
+//                                        System.out.println("print the board");
+                                    } else if (rowPosition > 0 && columnPosition == 0) {
+                                        if (rowPosition - spaces >= 0) {
                                             for (int i = rowPosition; i > rowPosition - spaces; i--) {
                                                 floor[i][columnPosition] = 1;
                                                 rowPosition -= 1;
                                             }
-                                            System.out.printf("%d%d",rowPosition,columnPosition);
-                                            System.out.println("print the board");
+                                            currentPosition[0][0] = rowPosition;
+                                            System.out.printf("%d%d", rowPosition, columnPosition);
+//                                            System.out.println("print the board");
                                         }
-                                        else if (rowPosition - spaces <= 0){
+                                    } else {
+                                        System.out.println("Please enter a valid space digit:");
+                                        input.nextLine();
+                                    }
+
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Invalid input,you can only go right less than 20 spaces");
+                                }
+                                catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
+                                    System.out.println("Index out of bounds");
+                                }
+                                System.out.println("Please input 3 to go right or 4 to go left:");
+                                commands= input.nextInt();
+
+                            } else if (commands == LEFT) {
+                                System.out.println("Please enter how many space left you'd like to move:");
+                                try {
+                                    int spaces = input.nextInt();
+                                    if (rowPosition == 0 && columnPosition == 0) {
+                                        for (int i = 0; i < spaces; i++) {
+                                            floor[i][columnPosition] = 1;
+                                            rowPosition += 1;
+                                        }
+                                        currentPosition[0][0] = rowPosition;
+                                        System.out.printf("%d%d", rowPosition, columnPosition);
+//                                        System.out.println("print the board");
+                                    }
+                                    else if (rowPosition > 0 && columnPosition == 0) {
+                                        for (int i = 0; i < spaces; i++) {
+                                            floor[rowPosition][i] = 1;
+                                            columnPosition += 1;
+                                        }
+                                        currentPosition[0][1] = columnPosition;
+                                        System.out.printf("%d%d", rowPosition, columnPosition);
+//                                        System.out.println("print the board");
+                                    }
+                                    else if (rowPosition > 0 && columnPosition > 0) {
+                                        if (rowPosition - spaces >= 0) {
+                                            for (int i = rowPosition; i > rowPosition - spaces; i--) {
+                                                floor[i][columnPosition] = 1;
+                                                rowPosition -= 1;
+                                            }
+                                            currentPosition[0][0] = rowPosition;
+                                            System.out.printf("%d%d", rowPosition, columnPosition);
+//                                            System.out.println("print the board");
+                                        } else if (rowPosition - spaces <= 0) {
                                             System.out.println("You have entered an impossible amount of spaces");
-                                            System.out.printf("%d%d",rowPosition,columnPosition);
-                                            System.out.println("print the board");
-                                            continue;
+                                            System.out.printf("%d%d", rowPosition, columnPosition);
+//                                            System.out.println("print the board");
+                                        }
+                                        else {
+                                            System.out.println("Please enter a valid space digit:");
+                                            input.nextLine();
                                         }
                                     }
-                                }
-                                catch (Exception e){
+                                } catch (InputMismatchException e) {
                                     System.out.println("Invalid input,you can only go right less than 20 spaces");
+                                    input.nextLine();
                                 }
                                 System.out.println("Please input 3 to go right or 4 to go left:");
                                 commands = input.nextInt();
+                            } else if (commands == DISPLAY_ARRAY) {
+                                displayArray(floor);
+                                break;
                             }
-                            else if (commands == DISPLAY_ARRAY){
-                                    displayArray(floor);
-                                    break;
+                            else{
+                                System.out.println("Please enter a valid input");
+                                input.nextLine();
                             }
-                        }
-                        catch (Exception e){
-                            System.out.println("Please enter a valid command");
-                        }
-                    }
-            }
-            else {
-                System.out.println("Please enter a valid input");
-            }
 
+                    }
+                }catch(InputMismatchException inputMismatchException){
+                    System.out.println("Please enter a valid command, first try block");
+                    input.nextLine();
+                }
+
+            }
         }
     }
     public static void displayArray(int[][] array){
-        for (int i = 0; i < array.length; i++){
-            for (int j = 0; j < array[i].length; j++){
-                if (array[i][j] == 0){
+        for (int[] ints : array) {
+            for (int anInt : ints) {
+                if (anInt == 0) {
                     System.out.print(" ");
-                }
-                else if (array[i][j] == 1){
+                } else if (anInt == 1) {
                     System.out.print("*");
                 }
             }
