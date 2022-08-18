@@ -12,7 +12,7 @@ public class Ex7_14 {
         System.out.println(product(d,a));
         System.out.println(product(b,c));
         System.out.println(product(a,b,c));
-        System.out.println();
+        System.out.println(product(a,b,c,d));
     }
     public static int product(int... numbers){
         int product = 1;
