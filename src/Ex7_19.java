@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Ex7_19 {
@@ -10,7 +11,8 @@ public class Ex7_19 {
             while (seatCount <= 10) {
                 System.out.println("Please enter 1 for first class");
                 System.out.println("Please enter 2 for economy class");
-                int classInput = input.nextInt();
+                try {
+                    int classInput = input.nextInt();
                     if (classInput == 1) {
                         if (!seats[firstClassCount] && firstClassCount <= 5) {
                             seats[firstClassCount] = true;
@@ -30,9 +32,11 @@ public class Ex7_19 {
                                     System.out.println("No available seat.Next flight leaves in 3 hours");
                             } else if (response.equalsIgnoreCase("no")) {
                                 System.out.println("Next flight leaves in 3 hours");
-                            }
-                            else
+                            } else {
                                 System.out.println("Please input yes or no");
+                                input.nextLine();
+                            }
+
                         }
                     } else if (classInput == 2) {
                         if (!seats[secondClass] && secondClass >= 6) {
@@ -54,13 +58,16 @@ public class Ex7_19 {
                                     System.out.println("No available seat.Next flight leaves in 3 hours");
                             } else if (response.equalsIgnoreCase("no")) {
                                 System.out.println("Next flight leaves in 3 hours%n");
-                            }
-                            else
+                            } else {
                                 System.out.println("Input not in range,Please input yes or no");
+                            }
                         }
-                    }
-                    else
+                    } else
                         System.out.println("Input not in range");
+                }catch (InputMismatchException mismatchException){
+                    System.out.println("You entered a wrong input,please try again:");
+                    input.nextLine();
+                }
 
             }
         }
