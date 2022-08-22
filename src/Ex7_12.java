@@ -33,6 +33,7 @@ public class Ex7_12 {
                     System.out.println("Number out of range,please try again");
                     input.nextLine();
                 }
+                //
             }
             catch (InputMismatchException inputMismatchException){
 //                System.err.printf("%nException: %s%n", inputMismatchException);
